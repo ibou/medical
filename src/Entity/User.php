@@ -56,9 +56,17 @@ abstract class User implements UserInterface
     protected string $email = "";
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $username;
+
+
+    /**
      * @ORM\Column(type="string")
      */
     protected string $password = "";
+
+
 
     /**
      * @return int
@@ -148,21 +156,30 @@ abstract class User implements UserInterface
     {
     }
 
-    /**
-     * @return string
-     */
-    public function getUsername(): string
-    {
-        return (string) $this->email;
-    }
 
     public function eraseCredentials()
     {
     }
 
-
-    public function getRoles()
+    /**
+     * @return mixed
+     */
+    public function getUsername()
     {
-        return ['ROLE_USER'];
+        return $this->username;
     }
+
+    /**
+     * @param mixed $username
+     * @return User
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+
+
+
 }

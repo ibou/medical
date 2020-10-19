@@ -35,6 +35,7 @@ class AppFixtures extends Fixture
         $personnel->setPassword($this->userPasswordEncoder->encodePassword($personnel, "dev"));
         $personnel->setName("Hamdi T.")
             ->setEmail("hamdi@gmail.com")
+            ->setUsername("hamdi")
             ->setUuid(Uuid::uuid4())
         ;
         $manager->persist($personnel);
@@ -43,6 +44,7 @@ class AppFixtures extends Fixture
         $patient->setPassword($this->userPasswordEncoder->encodePassword($patient, "dev"));
         $patient->setName("I. diallo")
             ->setEmail("idiallo@gmail.com")
+            ->setUsername("idiallo")
             ->setUuid(Uuid::uuid4())
         ;
         $manager->persist($patient);

@@ -1,18 +1,23 @@
+# api/config/packages/security.yaml
 security:
     encoders:
         App\Entity\User:
-            algorithm: bcrypt
+            algorithm: argon2i
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
+        # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
                 class: App\Entity\User
                 property: email
+
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern: ^/_(profiler|wdt)
             security: false
         api:
-            pattern: ^/api
+            pattern: ^/api/
             stateless: true
             anonymous: true
             provider: app_user_provider
@@ -28,15 +33,14 @@ security:
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
+    access_control:
+        - { path: ^/api/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY } # Allows accessing the Swagger UI
+        - { path: ^/authentication_token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        -
     role_hierarchy:
         ROLE_USER:       ROLE_USER
         ROLE_PERSONNEL: [ ROLE_USER ]
         ROLE_PATIENT: [ ROLE_USER ]
 
-    access_control:
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY } # Allows accessing the Swagger UI
-        - { path: ^/authentication_token    , roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api,        roles: ROLE_USER }
-        - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
