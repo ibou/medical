@@ -153,7 +153,7 @@ abstract class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return $this->email;
+        return (string) $this->email;
     }
 
     public function eraseCredentials()
@@ -161,4 +161,8 @@ abstract class User implements UserInterface
     }
 
 
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
 }
