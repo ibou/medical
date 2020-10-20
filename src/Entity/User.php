@@ -9,6 +9,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Repository\UserRepository;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -19,11 +20,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"patient"="Patient", "personnel"="Personnel"})
+ * @ORM\DiscriminatorMap({"patient"="Patient", "personnel"="Personnel", "user"="User"})
  * @UniqueEntity("email")
  * @ApiResource()
  */
-abstract class User implements UserInterface
+class User implements UserInterface
 {
 
 
@@ -65,6 +66,12 @@ abstract class User implements UserInterface
      * @ORM\Column(type="string")
      */
     protected string $password = "";
+
+    /**
+     * @ORM\Column(type="simple_array")
+     */
+    private array $roles = [];
+
 
 
 
@@ -179,7 +186,23 @@ abstract class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return array
+     */
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
 
+    /**
+     * @param array $roles
+     * @return User
+     */
+    public function setRoles(array $roles): User
+    {
+        $this->roles = $roles;
+        return $this;
+    }
 
 
 }

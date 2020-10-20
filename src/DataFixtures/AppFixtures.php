@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Patient;
 use App\Entity\Personnel;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
@@ -33,21 +34,34 @@ class AppFixtures extends Fixture
 
         $personnel = new Personnel();
         $personnel->setPassword($this->userPasswordEncoder->encodePassword($personnel, "dev"));
-        $personnel->setName("Hamdi T.")
-            ->setEmail("hamdi@gmail.com")
-            ->setUsername("hamdi")
-            ->setUuid(Uuid::uuid4())
-        ;
+        $personnel->setName("I. Personne");
+        $personnel->setEmail("perso@gmail.com");
+        $personnel->setUsername("person");
+        $personnel->setRoles(['ROLE_PERSONNEL']);
+        $personnel->setUuid(Uuid::uuid4());
         $manager->persist($personnel);
+        $manager->flush();
 
         $patient = new Patient();
         $patient->setPassword($this->userPasswordEncoder->encodePassword($patient, "dev"));
-        $patient->setName("I. diallo")
-            ->setEmail("idiallo@gmail.com")
-            ->setUsername("idiallo")
-            ->setUuid(Uuid::uuid4())
+        $patient->setName("I. Patient zero");
+            $patient->setEmail("patient@gmail.com");
+            $patient->setUsername("patient");
+            $patient->setRoles(['ROLE_PATIENT'])
         ;
+        $patient->setUuid(Uuid::uuid4());
         $manager->persist($patient);
         $manager->flush();
+
+        $user = new User();
+        $user->setPassword($this->userPasswordEncoder->encodePassword($user, "dev"));
+        $user->setName("I. diallo");
+        $user->setUsername("idiallo");
+        $user->setEmail("idiallo@gmail.com");
+        $user->setRoles(['ROLE_ADMIN']);
+        $user->setUuid(Uuid::uuid4());
+        $manager->persist($user);
+        $manager->flush();
+
     }
 }

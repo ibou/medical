@@ -36,11 +36,13 @@ security:
     access_control:
         - { path: ^/api/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY } # Allows accessing the Swagger UI
         - { path: ^/authentication_token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         -
     role_hierarchy:
         ROLE_USER:       ROLE_USER
         ROLE_PERSONNEL: [ ROLE_USER ]
         ROLE_PATIENT: [ ROLE_USER ]
+        ROLE_ADMIN:    [ROLE_PERSONNEL,ROLE_PATIENT]
 
 
