@@ -6,6 +6,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -71,6 +73,16 @@ class User implements UserInterface
      * @ORM\Column(type="simple_array")
      */
     private array $roles = [];
+
+    /**
+     * @ORM\OneToMany(targetEntity=File::class, mappedBy="user", fetch="EXTRA_LAZY", orphanRemoval=true, cascade={"persist","remove"})
+     */
+    private $files = [];
+
+    public function __construct()
+    {
+        $this->files = new ArrayCollection();
+    }
 
 
 
@@ -201,6 +213,37 @@ class User implements UserInterface
     public function setRoles(array $roles): User
     {
         $this->roles = $roles;
+        return $this;
+    }
+
+    /**
+     * @return Collection|File[]
+     */
+    public function getFiles(): Collection
+    {
+        return $this->files;
+    }
+
+    public function addFile(File $file): self
+    {
+        if (!$this->files->contains($file)) {
+            $this->files[] = $file;
+            $file->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFile(File $file): self
+    {
+        if ($this->files->contains($file)) {
+            $this->files->removeElement($file);
+            // set the owning side to null (unless already changed)
+            if ($file->getUser() === $this) {
+                $file->setUser(null);
+            }
+        }
+
         return $this;
     }
 

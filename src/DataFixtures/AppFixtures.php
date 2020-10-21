@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\File;
 use App\Entity\Patient;
 use App\Entity\Personnel;
 use App\Entity\User;
@@ -39,6 +40,19 @@ class AppFixtures extends Fixture
         $personnel->setUsername("person");
         $personnel->setRoles(['ROLE_PERSONNEL']);
         $personnel->setUuid(Uuid::uuid4());
+
+        $file = new File;
+        $file->setName('Passeport')
+            ->setPath('passeport.pdf')
+            ->setFolderId("KJ8-EEE-C44");
+        $personnel->addFile($file);
+        $file = new File;
+        $file->setName('carte grise')
+            ->setPath('carte-grise.pdf')
+            ->setFolderId("KJ8-EEE-C44")
+        ;
+        $personnel->addFile($file);
+
         $manager->persist($personnel);
         $manager->flush();
 
@@ -50,6 +64,18 @@ class AppFixtures extends Fixture
             $patient->setRoles(['ROLE_PATIENT'])
         ;
         $patient->setUuid(Uuid::uuid4());
+
+        $file = new File;
+        $file->setName('Devis')
+            ->setPath('devis.pdf')
+            ->setFolderId("KJ8-VDV-09T");
+        $patient->addFile($file);
+        $file = new File;
+        $file->setName('Radiographie')
+            ->setPath('radio-cardio.pdf')
+            ->setFolderId("KJ8-VDV-09T");
+        $patient->addFile($file);
+
         $manager->persist($patient);
         $manager->flush();
 
