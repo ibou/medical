@@ -24,7 +24,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({"patient"="Patient", "personnel"="Personnel", "user"="User"})
  * @UniqueEntity("email")
- * @ApiResource()
+ * @ApiResource(
+ *     itemOperations={
+ *         "get",
+ *         "put"
+ * }, collectionOperations={"get", "post"})
  */
 class User implements UserInterface
 {
@@ -230,7 +234,6 @@ class User implements UserInterface
             $this->files[] = $file;
             $file->setUser($this);
         }
-
         return $this;
     }
 

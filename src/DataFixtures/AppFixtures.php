@@ -43,12 +43,12 @@ class AppFixtures extends Fixture
 
         $file = new File;
         $file->setName('Passeport')
-            ->setPath('passeport.pdf')
+            ->setFileName('passeport.pdf')
             ->setFolderId("KJ8-EEE-C44");
         $personnel->addFile($file);
         $file = new File;
         $file->setName('carte grise')
-            ->setPath('carte-grise.pdf')
+            ->setFileName('carte-grise.pdf')
             ->setFolderId("KJ8-EEE-C44")
         ;
         $personnel->addFile($file);
@@ -67,12 +67,12 @@ class AppFixtures extends Fixture
 
         $file = new File;
         $file->setName('Devis')
-            ->setPath('devis.pdf')
+            ->setFileName('devis.pdf')
             ->setFolderId("KJ8-VDV-09T");
         $patient->addFile($file);
         $file = new File;
         $file->setName('Radiographie')
-            ->setPath('radio-cardio.pdf')
+            ->setFileName('radio-cardio.pdf')
             ->setFolderId("KJ8-VDV-09T");
         $patient->addFile($file);
 

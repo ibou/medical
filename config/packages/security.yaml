@@ -17,7 +17,7 @@ security:
             pattern: ^/_(profiler|wdt)
             security: false
         api:
-            pattern: ^/api/
+            pattern: ^/api
             stateless: true
             anonymous: true
             provider: app_user_provider
@@ -34,10 +34,11 @@ security:
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
     access_control:
-        - { path: ^/api/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY } # Allows accessing the Swagger UI
-        - { path: ^/authentication_token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/authentication_token, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/docs, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api, role: ROLE_USER }
+        - { path: ^/,       role: IS_AUTHENTICATED_ANONYMOUSLY }
         -
     role_hierarchy:
         ROLE_USER:       ROLE_USER

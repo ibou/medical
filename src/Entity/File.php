@@ -27,7 +27,7 @@ class File
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $path;
+    private $fileName;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="files")
@@ -56,17 +56,6 @@ class File
         return $this;
     }
 
-    public function getPath(): ?string
-    {
-        return $this->path;
-    }
-
-    public function setPath(string $path): self
-    {
-        $this->path = $path;
-
-        return $this;
-    }
 
     public function getUser(): ?User
     {
@@ -89,6 +78,24 @@ class File
     {
         $this->folderId = $folderId;
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFileName()
+    {
+        return $this->fileName;
+    }
+
+    /**
+     * @param string $fileName
+     * @return $this
+     */
+    public function setFileName(string $fileName): self
+    {
+        $this->fileName = $fileName;
         return $this;
     }
 }

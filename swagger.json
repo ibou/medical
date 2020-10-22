@@ -1,0 +1,72 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "oa title",
+        "version": "1"
+    },
+    "paths": {
+        "/authentication_token": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "operationId": "App\\Controller\\ApiSecurityController::login",
+                "requestBody": {
+                    "description": "email and password",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "JWT token used to authenticate yourself in subsequent api calls"
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/dossiers/export": {
+            "get": {
+                "tags": [
+                    "Export"
+                ],
+                "operationId": "App\\Controller\\ExportController::exportDossier",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "id user exple: 2",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "username user exple: idiallo",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "return un zip contenant les dossiers des patients"
+                    }
+                }
+            }
+        }
+    }
+}
