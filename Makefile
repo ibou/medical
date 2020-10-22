@@ -40,7 +40,6 @@ prepare-dev:
 
 db-init: prepare-dev
 
-
 create-dev-jwt:
 	mkdir -p config/jwt
 	openssl genrsa -aes256 -passout pass:$(DEV_JWT_PASSPHRASE) -out config/jwt/private.pem 4096
@@ -48,3 +47,7 @@ create-dev-jwt:
 	setfacl -R -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt
 	setfacl -dR -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt
 	echo "JWT_PASSPHRASE=$(DEV_JWT_PASSPHRASE)" > .env.local
+
+
+generate-open-api:
+	vendor/bin/openapi src/ -o swagger.json
